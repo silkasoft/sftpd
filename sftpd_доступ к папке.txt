@@ -1,0 +1,44 @@
+
+1.Открываем настройки
+sudo nano /etc/ssh/sshd_config
+
+2. Добавляем юзера, прописываем название и доступ к папке
+Match User riff_dcp
+        ChrootDirectory /mnt/RIFF/2020_DCP/
+        ForceCommand internal-sftp
+        PermitTunnel no
+        X11Forwarding no
+        AllowTcpForwarding no
+        PasswordAuthentication yes
+
+3. Создаем юзера и даем ему пароль
+sudo useradd riff_dcp
+sudo passwd riff_dcp
+
+4.Даем ему во владение папку
+sudo usermod -d /mnt/RIFF/2020_DCP riff_dcp
+
+5.Теперь нужно прописать владельца
+Все папки - владелец root
+sudo chown root:root /mnt/RIFF
+sudo chown root:root /mnt
+Саму папку отдаем пользователю
+sudo chown -R root:root /mnt/RIFF/2020_DCP
+
+6. Дальше прописываем права
+sudo chown 0755 /mnt
+sudo chmod 0755 /mnt/RIFF
+sudo chmod 0755 /mnt/RIFF/2020_DCP
+
+7. Если мы хотим создать папку для аплода
+sudo mkdir /mnt/RIFF/2020_DCP/upload
+sudo chmod 0775 /mnt/RIFF/2020_DCP/upload
+sudo chown riff_dcp:riff_dcp /mnt/RIFF/2020_VIDEO/upload
+
+8.закрываем shell /bin/sh меняем на false
+sudo nano /etc/passwd
+riff_dcp:x:1007:1007::/mnt/RIFF/2020_DCP:/bin/false
+
+9.Перезапустить ssh
+sudo systemctl restart ssh
+
