@@ -41,11 +41,3 @@ riff_dcp:x:1007:1007::/mnt/RIFF/2020_DCP:/bin/false
 
 9.Перезапустить ssh
 sudo systemctl restart ssh
-
-
-riff_video
-2890223456
-
-riff_dcp
-5430292774
-
